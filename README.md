@@ -1,0 +1,2 @@
+# GoBetter
+Golang webserver practice
