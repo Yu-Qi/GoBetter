@@ -13,7 +13,7 @@ env:
 jobs:
   deploy-prod:
     runs-on: ubuntu-latest
-    environment: "$GITHUB_REF_NAME"
+    environment: $GITHUB_REF_NAME
     steps:
       - name: check
         run: |
