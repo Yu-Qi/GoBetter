@@ -21,7 +21,6 @@ jobs:
           echo "$env:GITHUB_REF_NAME"
           echo "${{ env.GITHUB_REF_NAME }}"
           echo "${{ GITHUB_REF_NAME }}"
-          echo "$GITHUB_REF_NAME"
           echo "${{ secrets.GCP_PROJECT }}"
           echo "${{ secrets.GCP_SA_KEY }}"
           echo "${{ env.GCP_SA_KEY }}"
