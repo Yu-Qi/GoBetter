@@ -14,6 +14,11 @@ jobs:
   deploy-prod:
     runs-on: ubuntu-latest
     steps:
+      - name: check
+        run: |
+          echo "Develop~~"
+          echo "${{ secrets.GCP_PROJECT }}"
+          echo "${{ secrets.GCP_SA_KEY }}"
       - name: Checkout
         uses: actions/checkout@v3
       # authentication via credentials json
