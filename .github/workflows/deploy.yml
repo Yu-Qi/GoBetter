@@ -21,7 +21,6 @@ jobs:
           echo "${{ secrets.GCP_SA_KEY }}"
           echo "${{ env.GCP_SA_KEY }}"
           echo "${{ env.GCP_PROJECT }}"
-          echo "${{ GITHUB_EVENT_NAME }}"
       - name: Checkout
         uses: actions/checkout@v3
       # authentication via credentials json
