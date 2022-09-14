@@ -9,12 +9,12 @@ on:
 name: Build and Deploy to Cloud Run
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
-  BRANCH: $GITHUB_REF_NAME
+  BRANCH: ${{ GITHUB_REF_NAME }}
 
 jobs:
   deploy-prod:
     runs-on: ubuntu-latest
-    environment: $BRANCH
+    environment: ${{ GITHUB_REF_NAME }}
     steps:
       - name: check
         run: |
@@ -26,16 +26,16 @@ jobs:
           echo "${{ env.GCP_SA_KEY }}"
           echo "${{ env.GCP_PROJECT }}"
           echo "${{ env.PROJECT_ID }}"
-      - name: Checkout
-        uses: actions/checkout@v3
-      # authentication via credentials json
-      - id: 'auth'
-        uses: 'google-github-actions/auth@v0'
-        with:
-          credentials_json: '${{ secrets.GCP_SA_KEY }}'
-      # Setup gcloud CLI
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0
-      - name: check
-        run: |
-          echo "`gcloud secrets versions access latest --secret="BACKEND_KEYS" | jq -r '.MYSQL_PASSWORD'`"
+      # - name: Checkout
+      #   uses: actions/checkout@v3
+      # # authentication via credentials json
+      # - id: 'auth'
+      #   uses: 'google-github-actions/auth@v0'
+      #   with:
+      #     credentials_json: '${{ secrets.GCP_SA_KEY }}'
+      # # Setup gcloud CLI
+      # - name: Set up Cloud SDK
+      #   uses: google-github-actions/setup-gcloud@v0
+      # - name: check
+      #   run: |
+      #     echo "`gcloud secrets versions access latest --secret="BACKEND_KEYS" | jq -r '.MYSQL_PASSWORD'`"
