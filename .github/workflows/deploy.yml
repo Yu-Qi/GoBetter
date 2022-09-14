@@ -19,7 +19,6 @@ jobs:
         run: |
           echo "Develop~~"
           echo "$GITHUB_REF_NAME"
-          echo "$BRANCH"
           echo "${{ secrets.GCP_PROJECT }}"
           echo "${{ secrets.GCP_SA_KEY }}"
           echo "${{ env.GCP_SA_KEY }}"
@@ -27,13 +26,12 @@ jobs:
           echo "${{ env.PROJECT_ID }}"
   deploy-prod:
     runs-on: ubuntu-latest
-    environment: ${{ env.GITHUB_REF_NAME }}
+    environment: "$GITHUB_REF_NAME"
     steps:
       - name: check
         run: |
           echo "Develop~~"
           echo "$GITHUB_REF_NAME"
-          echo "$BRANCH"
           echo "${{ secrets.GCP_PROJECT }}"
           echo "${{ secrets.GCP_SA_KEY }}"
           echo "${{ env.GCP_SA_KEY }}"
