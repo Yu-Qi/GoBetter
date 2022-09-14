@@ -14,6 +14,11 @@ jobs:
   deploy-prod:
     runs-on: ubuntu-latest
     steps:
+      - shell: bash
+        env:
+          GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+        run: |
+          echo "GOODLUCK: $GCP_PROJECT"
       - name: check
         run: |
           echo "Develop~~"
@@ -21,6 +26,7 @@ jobs:
           echo "${{ secrets.GCP_SA_KEY }}"
           echo "${{ env.GCP_SA_KEY }}"
           echo "${{ env.GCP_PROJECT }}"
+          echo "${{ GITHUB_EVENT_NAME }}"
       - name: Checkout
         uses: actions/checkout@v3
       # authentication via credentials json
