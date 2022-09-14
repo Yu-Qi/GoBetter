@@ -19,6 +19,8 @@ jobs:
           echo "Develop~~"
           echo "${{ secrets.GCP_PROJECT }}"
           echo "${{ secrets.GCP_SA_KEY }}"
+          echo "${{ env.GCP_SA_KEY }}"
+          echo "${{ env.GCP_PROJECT }}"
       - name: Checkout
         uses: actions/checkout@v3
       # authentication via credentials json
