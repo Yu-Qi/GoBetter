@@ -14,8 +14,7 @@ jobs:
   deploy-prod:
     runs-on: ubuntu-latest
     steps:
-      - shell: bash
-        env:
+      - env:
           GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
         run: |
           echo "GOODLUCK: $GCP_PROJECT"
