@@ -9,12 +9,12 @@ on:
 name: Build and Deploy to Cloud Run
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
-  B: ${{ env.GITHUB_REF_NAME }}
+  B: dev
 
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
-    environment: "${{ env.B }}"
+    environment: $B
     steps:
       - name: check
         run: |
@@ -27,7 +27,7 @@ jobs:
           echo "${{ env.PROJECT_ID }}"
   deploy-prod:
     runs-on: ubuntu-latest
-    environment: "$GITHUB_REF_NAME"
+    environment: dev
     steps:
       - name: check
         run: |
