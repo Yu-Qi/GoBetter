@@ -27,7 +27,7 @@ jobs:
           echo "${{ env.PROJECT_ID }}"
   deploy-prod:
     runs-on: ubuntu-latest
-    environment: ${{ GITHUB_REF_NAME }}
+    environment: ${{ env.GITHUB_REF_NAME }}
     steps:
       - name: check
         run: |
