@@ -9,9 +9,22 @@ on:
 name: Build and Deploy to Cloud Run
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
-  BRANCH: ${{ GITHUB_REF_NAME }}
 
 jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment: $GITHUB_REF_NAME
+    steps:
+      - name: check
+        run: |
+          echo "Develop~~"
+          echo "$GITHUB_REF_NAME"
+          echo "$BRANCH"
+          echo "${{ secrets.GCP_PROJECT }}"
+          echo "${{ secrets.GCP_SA_KEY }}"
+          echo "${{ env.GCP_SA_KEY }}"
+          echo "${{ env.GCP_PROJECT }}"
+          echo "${{ env.PROJECT_ID }}"
   deploy-prod:
     runs-on: ubuntu-latest
     environment: ${{ GITHUB_REF_NAME }}
