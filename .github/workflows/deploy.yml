@@ -13,7 +13,7 @@ env:
 jobs:
   deploy-prod:
     runs-on: ubuntu-latest
-    environment: dev
+    environment: "${{ secrets.GCP_PROJECT }}"
     steps:
       - name: check
         run: |
