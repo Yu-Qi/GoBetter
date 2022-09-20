@@ -5,7 +5,9 @@ go 1.17
 require (
 	github.com/gin-gonic/gin v1.8.1
 	gorm.io/driver/mysql v1.3.6
+	gorm.io/gen v0.3.16
 	gorm.io/gorm v1.23.9
+	gorm.io/plugin/dbresolver v1.2.2
 )
 
 require (
@@ -33,7 +35,5 @@ require (
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gorm.io/datatypes v1.0.7 // indirect
-	gorm.io/gen v0.3.16 // indirect
 	gorm.io/hints v1.1.0 // indirect
-	gorm.io/plugin/dbresolver v1.2.2 // indirect
 )
