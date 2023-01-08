@@ -1,0 +1,137 @@
+on:
+  push:
+    tags:
+      - v[0-9].[0-9]+.[0-9]+
+    branches:
+      - main
+      - release-v[0-9].[0-9]+.[0-9]+
+      - dev
+  workflow_dispatch:
+
+env:
+  GCP_PROJECT_DEV: stickey-wallet-app-dev
+  GCP_PROJECT_STAGING: stickey-wallet-app-staging
+  GCP_PROJECT: stickey-wallet-app
+  CLOUD_SQL_IP_DEV: 10.82.128.3 #FIXME:
+  CLOUD_SQL_IP_STAGING: 10.82.128.3 #FIXME:
+  CLOUD_SQL_IP: 10.92.224.3 #FIXME:
+
+name: Build and Deploy to Cloud Run
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    # if: ${{ github.ref == 'refs/heads/main' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: run docker
+        runs:
+        using: 'docker'
+        image: 'docker/github_action'
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     # authentication via credentials json
+  #     - id: "auth"
+  #       uses: "google-github-actions/auth@v0"
+  #       with:
+  #         credentials_json: "${{ secrets.GCP_SA_KEY_DEV }}"
+  #     # Setup gcloud CLI
+  #     - name: Set up Cloud SDK
+  #       uses: google-github-actions/setup-gcloud@v0
+  #     # Setup ko
+  #     - name: Set up ko
+  #       uses: imjasonh/setup-ko@v0.6
+  #     # Gcloud sql proxy
+  #     - name: gcloud sql proxy
+  #       uses: mattes/gce-cloudsql-proxy-action@v1
+  #       with:
+  #         creds: ${{ secrets.GCP_SA_KEY }}
+  #         instance: kryptogo-wallet-app-dev:asia-east1:dev-8 #TODO:
+  #     # DB migration with liquibase
+  #     # FIXME: Use pre-built docker image instead of downloading liquibase and mysql connector
+  #     - name: DB migration with liquibase
+  #       run: |
+  #         wget -O liquibase-4.16.0.tar.gz https://github.com/liquibase/liquibase/releases/download/v4.16.0/liquibase-4.16.0.tar.gz > /dev/null 2>&1 && tar zxvf liquibase-4.16.0.tar.gz > /dev/null 2>&1 && chmod +x liquibase
+  #         wget -O mysql-connector-java-8.0.30.tar.gz https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.30.tar.gz > /dev/null 2>&1 && tar zxvf mysql-connector-java-8.0.30.tar.gz > /dev/null 2>&1 && mv mysql-connector-java-8.0.30/mysql-connector-java-8.0.30.jar $(dirname "$(which liquibase)")/lib
+  #         export DATABASE=stickey && ./liquibase update \
+  #         --changelog-file=res/liquibase/changeset.mysql.sql --url=jdbc:mysql://localhost:3307/wallet \
+  #         --username=root --password="`gcloud secrets versions access latest --secret="BACKEND_KEYS" | jq -r '.MYSQL_PASSWORD'`"
+  #     # Build and deploy
+  #     - name: run make deploy-dev
+  #       run: |
+  #         make deploy-dev
+  # deploy-staging:
+  #   runs-on: ubuntu-latest
+  #   if: ${{ startsWith(github.ref, 'refs/heads/release-v') }}
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     # authentication via credentials json
+  #     - id: "auth"
+  #       uses: "google-github-actions/auth@v0"
+  #       with:
+  #         credentials_json: "${{ secrets.GCP_SA_KEY_STAGING }}"
+  #     # Setup gcloud CLI
+  #     - name: Set up Cloud SDK
+  #       uses: google-github-actions/setup-gcloud@v0
+  #     # Setup ko
+  #     - name: Set up ko
+  #       uses: imjasonh/setup-ko@v0.6
+  #     # Gcloud sql proxy
+  #     - name: gcloud sql proxy
+  #       uses: mattes/gce-cloudsql-proxy-action@v1
+  #       with:
+  #         creds: ${{ secrets.GCP_SA_KEY_STAGING }}
+  #         instance: kryptogo-wallet-app-dev:asia-east1:dev-8 #TODO:
+  #     # DB migration with liquibase
+  #     # FIXME: Use pre-built docker image instead of downloading liquibase and mysql connector
+  #     - name: DB migration with liquibase
+  #       runs:
+  #         using: 'docker'
+  #         image: 'dokcer/github_action'
+  #         # wget -O liquibase-4.16.0.tar.gz https://github.com/liquibase/liquibase/releases/download/v4.16.0/liquibase-4.16.0.tar.gz > /dev/null 2>&1 && tar zxvf liquibase-4.16.0.tar.gz > /dev/null 2>&1 && chmod +x liquibase
+  #         # wget -O mysql-connector-java-8.0.30.tar.gz https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.30.tar.gz > /dev/null 2>&1 && tar zxvf mysql-connector-java-8.0.30.tar.gz > /dev/null 2>&1 && mv mysql-connector-java-8.0.30/mysql-connector-java-8.0.30.jar $(dirname "$(which liquibase)")/lib
+  #         export DATABASE=stickey && ./liquibase update \
+  #         --changelog-file=res/liquibase/changeset.mysql.sql --url=jdbc:mysql://localhost:3307/wallet \
+  #         --username=root --password="`gcloud secrets versions access latest --secret="BACKEND_KEYS" | jq -r '.MYSQL_PASSWORD'`"
+  #     # Build and deploy
+  #     - name: run make deploy-stag
+  #       run: |
+  #         make deploy-stag
+  # deploy-prod:
+  #   runs-on: ubuntu-latest
+  #   if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     # authentication via credentials json
+  #     - id: "auth"
+  #       uses: "google-github-actions/auth@v0"
+  #       with:
+  #         credentials_json: "${{ secrets.GCP_SA_KEY }}"
+  #     # Setup gcloud CLI
+  #     - name: Set up Cloud SDK
+  #       uses: google-github-actions/setup-gcloud@v0
+  #     # Setup ko
+  #     - name: Set up ko
+  #       uses: imjasonh/setup-ko@v0.6
+  #     # Gcloud sql proxy
+  #     - name: gcloud sql proxy
+  #       uses: mattes/gce-cloudsql-proxy-action@v1
+  #       with:
+  #         creds: ${{ secrets.GCP_SA_KEY }}
+  #         instance: kryptogo-wallet-app:asia-east1:dev-8 #TODO:
+  #     # DB migration with liquibase
+  #     # FIXME: Use pre-built docker image instead of downloading liquibase and mysql connector
+  #     - name: DB migration with liquibase
+  #       run: |
+  #         wget -O liquibase-4.16.0.tar.gz https://github.com/liquibase/liquibase/releases/download/v4.16.0/liquibase-4.16.0.tar.gz > /dev/null 2>&1 && tar zxvf liquibase-4.16.0.tar.gz > /dev/null 2>&1 && chmod +x liquibase
+  #         wget -O mysql-connector-java-8.0.30.tar.gz https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.30.tar.gz > /dev/null 2>&1 && tar zxvf mysql-connector-java-8.0.30.tar.gz > /dev/null 2>&1 && mv mysql-connector-java-8.0.30/mysql-connector-java-8.0.30.jar $(dirname "$(which liquibase)")/lib
+  #         export DATABASE=stickey && ./liquibase update \
+  #         --changelog-file=res/liquibase/changeset.mysql.sql --url=jdbc:mysql://localhost:3307/wallet \
+  #         --username=root --password="`gcloud secrets versions access latest --secret="BACKEND_KEYS" | jq -r '.MYSQL_PASSWORD'`"
+  #     # Build and deploy
+  #     - name: run make deploy
+  #       run: |
+  #         make deploy
