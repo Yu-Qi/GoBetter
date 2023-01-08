@@ -21,12 +21,19 @@ name: Build and Deploy to Cloud Run
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
+    container:
+    image: kilna/liquibase-mysql
     # if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: run docker
-        uses: Yu-Qi/GoBetter@v2
+        run: |
+          export DATABASE=stickey && ./liquibase update \
+          --changelog-file=res/liquibase/changeset.mysql.sql --url=jdbc:mysql://localhost:3306/stickey \
+          --username=root --password=changeit
+
+  # --username=root --password="`gcloud secrets versions access latest --secret="BACKEND_KEYS" | jq -r '.MYSQL_PASSWORD'`"
   #     - name: Checkout
   #       uses: actions/checkout@v3
   #     # authentication via credentials json
