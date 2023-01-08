@@ -1,0 +1,22 @@
+FROM alpine:3.10
+
+
+CMD [ "echo", "test" ]
+
+# WORKDIR /app
+
+# COPY go.mod .
+# COPY go.sum .
+# RUN go mod download
+
+# COPY . .
+
+# RUN wget -O liquibase-4.16.0.tar.gz https://github.com/liquibase/liquibase/releases/download/v4.16.0/liquibase-4.16.0.tar.gz > /dev/null 2>&1 && tar zxvf liquibase-4.16.0.tar.gz > /dev/null 2>&1 && chmod +x liquibase &&\
+#     wget -O mysql-connector-java-8.0.30.tar.gz https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.30.tar.gz > /dev/null 2>&1 && tar zxvf mysql-connector-java-8.0.30.tar.gz > /dev/null 2>&1 && mv mysql-connector-java-8.0.30/mysql-connector-java-8.0.30.jar $(dirname "$(which liquibase)")/lib
+# EXPOSE 8080
+
+# CMD [ "./bin/api-airdrop" ]
+
+#           export DATABASE=stickey && ./liquibase update \
+#           --changelog-file=res/liquibase/changeset.mysql.sql --url=jdbc:mysql://localhost:3307/wallet \
+#           --username=root --password="`gcloud secrets versions access latest --secret="BACKEND_KEYS" | jq -r '.MYSQL_PASSWORD'`"
