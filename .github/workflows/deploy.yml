@@ -31,9 +31,13 @@ jobs:
         uses: actions/checkout@v3
       - name: run docker
         run: |
-          export DATABASE=stickey && liquibase update \
-          --changelog-file=res/liquibase/changeset.mysql.sql --url=jdbc:mysql://localhost:3306/stickey \
-          --username=root --password=changeit
+          ls &&
+          export DATABASE=stickey &&
+          export LIQUIBASE_DATABASE=stickey &&
+          export LIQUIBASE_USERNAME=user &&
+          export LIQUIBASE_PASSWORD=changeit &&
+          export LIQUIBASE_CHANGELOG=res/liquibase/changeset.mysql.sql &&
+          liquibase update
 
   # --username=root --password="`gcloud secrets versions access latest --secret="BACKEND_KEYS" | jq -r '.MYSQL_PASSWORD'`"
   #     - name: Checkout
