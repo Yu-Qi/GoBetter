@@ -6,6 +6,7 @@ on:
       - main
       - release-v[0-9].[0-9]+.[0-9]+
       - dev
+      - .*
   workflow_dispatch:
 
 env:
@@ -22,7 +23,7 @@ jobs:
   deploy-dev:
     runs-on: ubuntu-latest
     container:
-    image: kilna/liquibase-mysql
+      image: kilna/liquibase-mysql
     # if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Checkout
