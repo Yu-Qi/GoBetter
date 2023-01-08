@@ -26,7 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: run docker
-        uses: GoBetter/hello
+        uses: Yu-Qi/GoBetter
   #     - name: Checkout
   #       uses: actions/checkout@v3
   #     # authentication via credentials json
